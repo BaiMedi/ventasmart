@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Ventas Inteligentes con IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            background-color: #e9f7e9;
+            padding: 15px;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            color: #155724;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador de Ventas Inteligentes con IA</h1>
+        <p>Introduce los datos de tu negocio para obtener recomendaciones personalizadas.</p>
+        <form id="salesSimulatorForm">
+            <label for="monthlyLeads">Número de prospectos mensuales:</label>
+            <input type="number" id="monthlyLeads" placeholder="Ejemplo: 200" required>
+            
+            <label for="conversionRate">Tasa de conversión actual (%):</label>
+            <input type="number" id="conversionRate" placeholder="Ejemplo: 10" required>
+            
+            <label for="targetIncrease">Incremento objetivo en conversiones (%):</label>
+            <input type="number" id="targetIncrease" placeholder="Ejemplo: 20" required>
+            
+            <label for="salesTools">¿Usas herramientas de IA actualmente?</label>
+            <select id="salesTools" required>
+                <option value="yes">Sí</option>
+                <option value="no">No</option>
+            </select>
+            
+            <button type="button" onclick="calculateRecommendations()">Obtener recomendaciones</button>
+        </form>
+        
+        <div id="result" class="result" style="display: none;">
+            <h2>Resultados del Simulador</h2>
+            <p id="recommendations"></p>
+        </div>
+    </div>
+    
+    <script>
+        function calculateRecommendations() {
+            const monthlyLeads = parseInt(document.getElementById("monthlyLeads").value);
+            const conversionRate = parseFloat(document.getElementById("conversionRate").value);
+            const targetIncrease = parseFloat(document.getElementById("targetIncrease").value);
+            const usesIA = document.getElementById("salesTools").value === "yes";
+            
+            const currentSales = monthlyLeads * (conversionRate / 100);
+            const targetSales = currentSales * (1 + targetIncrease / 100);
+            const additionalSales = targetSales - currentSales;
+            
+            let recommendations = `
+                <strong>Ventas actuales:</strong> ${currentSales.toFixed(2)} ventas/mes.<br>
+                <strong>Objetivo de ventas:</strong> ${targetSales.toFixed(2)} ventas/mes.<br>
+                <strong>Incremento necesario:</strong> ${additionalSales.toFixed(2)} ventas adicionales/mes.<br><br>
+            `;
+            
+            if (!usesIA) {
+                recommendations += `
+                    <strong>Recomendación:</strong> Integra herramientas de IA para:
+                    <ul>
+                        <li>Identificar prospectos con mayor potencial.</li>
+                        <li>Automatizar mensajes personalizados.</li>
+                        <li>Predecir resultados y optimizar tu embudo de ventas.</li>
+                    </ul>
+                `;
+            } else {
+                recommendations += `
+                    <strong>Recomendación:</strong> Optimiza tus estrategias actuales de IA para alcanzar tu objetivo de conversión más rápidamente. Considera:
+                    <ul>
+                        <li>Revisar y mejorar tus mensajes personalizados.</li>
+                        <li>Analizar cuellos de botella en tu embudo de ventas.</li>
+                        <li>Usar IA para priorizar prospectos más calificados.</li>
+                    </ul>
+                `;
+            }
+            
+            document.getElementById("recommendations").innerHTML = recommendations;
+            document.getElementById("result").style.display = "block";
+        }
+    </script>
+</body>
+</html>
